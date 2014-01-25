@@ -1,8 +1,11 @@
-Sparkngin-developer-setup
+Sparkngin Developer Setup
 =========================
 
-- Setup your environment with:
-- [DemandCube Developer Setup](https://github.com/DemandCube/developer-setup)
+This is the Vagrant Setup developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
+
+- Step 1) 
+  - Setup your environment with:
+  - [DemandCube Developer Setup](https://github.com/DemandCube/developer-setup)
 
 
 Keep your fork updated
