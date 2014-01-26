@@ -1,0 +1,50 @@
+- name: install wget
+  yum: name='wget' state=installed
+  sudo: yes
+
+- name: download epel rpm
+  shell: "wget --no-check-certificate http://download.fedoraproject.org/pub/epel/6/x86_64/{{ epel_filename }} -O {{ epel_rpm }} creates={{ epel_rpm }}"
+
+- name: yum install epel (Extra Packages for Enterprise Linux)
+  shell: "yum -y --nogpgcheck localinstall {{ epel_rpm }}"
+  sudo: yes
+
+- name: git
+  yum: name='git' state=installed
+  sudo: yes
+
+- name: yum install python-pip
+  yum: name='python-pip' state=installed
+  sudo: yes
+
+#- name: easy_install
+  #yum: name='python-distribute' state=installed
+  #sudo: yes
+
+#- name: install pip
+  #easy_install: name='pip'
+  #sudo: yes
+
+- name: install argparse for python
+  pip: name='argparse' state=present
+  sudo: yes
+
+- name: install tmux
+  yum: name='tmux' state=installed
+  sudo: yes
+
+- name: install lsof
+  yum: name='lsof' state=installed
+  sudo: yes
+
+- name: download maven repo
+  shell: "wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O {{ maven_repo_location }} creates={{ maven_repo_location }}"
+  sudo: yes
+
+- name: install maven
+  yum: name='apache-maven' state=installed
+  sudo: yes
+
+- name: set up mvn symlink
+  file: state=link src=/usr/share/apache-maven/bin/mvn dest=/usr/bin/mvn
+  sudo: yes

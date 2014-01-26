@@ -2,13 +2,29 @@ Sparkngin Developer Setup
 =========================
 - A [NeverwinterDP](https://github.com/DemandCube/NeverwinterDP) and [DemandCube](https://github.com/DemandCube) Project
 
-
 This is the Vagrant Setup for developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
 
-- Step 1) 
-  - Setup your environment with:
-  - [DemandCube Developer Setup](https://github.com/DemandCube/developer-setup)
+Install
+====
+Step 1) Setup
+----
 
+- [DemandCube Developer Setup](https://github.com/DemandCube/developer-setup)
+
+```
+git clone https://github.com/DemandCube/developer-setup.git
+cd developer-setup
+./setup.sh
+```
+Step 2) Run
+----
+
+```
+git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
+cd vagrant-centos-template
+vagrant up
+vagrant ssh
+```
 
 Keep your fork updated
 ====

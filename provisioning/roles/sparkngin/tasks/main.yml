@@ -1,0 +1,4 @@
+- name: git checkout repo
+  git: repo=https://github.com/DemandCube/Sparkngin.git
+        dest=/home/vagrant/Sparkngin
+
