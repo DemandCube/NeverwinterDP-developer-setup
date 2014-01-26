@@ -1,5 +1,7 @@
 Sparkngin Developer Setup
 =========================
+- A [NeverwinterDP](https://github.com/DemandCube/NeverwinterDP) and [DemandCube](https://github.com/DemandCube) Project
+
 
 This is the Vagrant Setup developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
 
