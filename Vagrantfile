@@ -12,11 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   Vagrant.require_version ">= 1.4.3"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "demandcube-centos65-virtualbox-v1"
+  config.vm.box = "demandcube-centos65-virtualbox-v1.1"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://github.com/DemandCube/vagrant-centos/releases/download/demandcube-v6.5.0/centos65-x86_64-20140125.box"
+  config.vm.box_url = "https://github.com/DemandCube/vagrant-centos/releases/download/demandcube-v6.5.1.1/centos65-x86_64-20140126.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
