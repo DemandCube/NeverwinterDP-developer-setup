@@ -15,3 +15,15 @@
 - name: symlink java
   file: src=/usr/java/default/bin/javac dest=/usr/bin/javac state=link
   sudo: yes
+  
+- name: download maven repo
+  shell: "wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O {{ maven_repo_location }} creates={{ maven_repo_location }}"
+  sudo: yes
+
+- name: install maven
+  yum: name='apache-maven' state=installed
+  sudo: yes
+
+- name: set up mvn symlink
+  file: state=link src=/usr/share/apache-maven/bin/mvn dest=/usr/bin/mvn
+  sudo: yes

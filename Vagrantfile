@@ -62,6 +62,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #     'vvvv', connection debugging
       ansible.playbook = "provisioning/server.yml"
       
+      # Example of setting tags in ansible
+      # Referenced in commented out example in server.yml
+      # ansible.tags = ["base", "sparkngin"]
+      
       # If you get the error below enable the line below
       
       #######
@@ -87,60 +91,64 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
   end
   
-  # config.vm.define :sparkngin2 do |sparkngin2|
-  #   # Create a private network, which allows host-only access to the machine
-  #   # using a specific IP.
-  #   sparkngin2.vm.network :private_network, ip: "192.168.56.12"
-  #   sparkngin2.vm.hostname = "sparkngin2.local"
-  #   
-  #   config.vm.provider :virtualbox do |vb|
-  #     vb.name = "sparkngin2"
-  #     # vb.customize ["modifyvm", :id, "--memory", "1024"]
-  #     # vb.customize ["modifyvm", :id, "--cpus", "2"]
-  #   end
-  #   
-  #   # More Info See: http://docs.vagrantup.com/v2/vagrantfile/ssh_settings.html
-  #   
-  #   # sparkngin1.ssh.host = "127.0.0.1"
-  #   # sparkngin1.ssh.port = "2222"
-  #   # sparkngin1.ssh.guest_port = "22" 
-  #   
-  #   # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
-  #   config.vm.provision :ansible do |ansible|
-  #     # ansible.verbose = "v"
-  #     # ansible.verbose = "vv"
-  #     # ansible.verbose = "vvv"
-  #     # ansible.verbose = "vvvv"
-  #     #     'v', verbose mode
-  #     #     'vv'
-  #     #     'vvv', more
-  #     #     'vvvv', connection debugging
-  #     ansible.playbook = "provisioning/server.yml"
-  #     
-  #     # If you get the error below enable the line below
-  #     
-  #     #######
-  #     ansible.host_key_checking = false
-  #     #######
-  #     
-  #     # debug3: check_host_in_hostfile: host [127.0.0.1]:2222 filename /Users/username/.ssh/known_hosts
-  #     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  #     # @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-  #     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  #     # IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-  #     # Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-  #     # It is also possible that the RSA host key has just been changed.
-  #     # The fingerprint for the RSA key sent by the remote host is
-  #     # 1b:52:69:cb:ed:31:65:ad:3c:12:41:74:8f:77:c0:68.
-  #     # Please contact your system administrator.
-  #     # Add correct host key in /Users/username/.ssh/known_hosts to get rid of this message.
-  #     # Offending key in /Users/username/.ssh/known_hosts:174
-  #     # RSA host key for [127.0.0.1]:2222 has changed and you have requested strict checking.
-  #     # Host key verification failed.
-  #     
-  #   end
-  #   
-  # end
+  config.vm.define :sparkngin2 do |sparkngin2|
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    sparkngin2.vm.network :private_network, ip: "192.168.56.12"
+    sparkngin2.vm.hostname = "sparkngin2.local"
+    
+    config.vm.provider :virtualbox do |vb|
+      vb.name = "sparkngin2"
+      # vb.customize ["modifyvm", :id, "--memory", "1024"]
+      # vb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
+    
+    # More Info See: http://docs.vagrantup.com/v2/vagrantfile/ssh_settings.html
+    
+    # sparkngin1.ssh.host = "127.0.0.1"
+    # sparkngin1.ssh.port = "2222"
+    # sparkngin1.ssh.guest_port = "22" 
+    
+    # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
+    config.vm.provision :ansible do |ansible|
+      ansible.verbose = "v"
+      # ansible.verbose = "vv"
+      # ansible.verbose = "vvv"
+      # ansible.verbose = "vvvv"
+      #     'v', verbose mode
+      #     'vv'
+      #     'vvv', more
+      #     'vvvv', connection debugging
+      ansible.playbook = "provisioning/server.yml"
+      
+      # Example of setting tags in ansible
+      # Referenced in commented out example in server.yml
+      # ansible.tags = ["base", "zookeeper"]
+      
+      # If you get the error below enable the line below
+      
+      #######
+      ansible.host_key_checking = false
+      #######
+      
+      # debug3: check_host_in_hostfile: host [127.0.0.1]:2222 filename /Users/username/.ssh/known_hosts
+      # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      # @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+      # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      # IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+      # Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+      # It is also possible that the RSA host key has just been changed.
+      # The fingerprint for the RSA key sent by the remote host is
+      # 1b:52:69:cb:ed:31:65:ad:3c:12:41:74:8f:77:c0:68.
+      # Please contact your system administrator.
+      # Add correct host key in /Users/username/.ssh/known_hosts to get rid of this message.
+      # Offending key in /Users/username/.ssh/known_hosts:174
+      # RSA host key for [127.0.0.1]:2222 has changed and you have requested strict checking.
+      # Host key verification failed.
+      
+    end
+    
+  end
 
 
   #

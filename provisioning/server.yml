@@ -1,6 +1,22 @@
-- hosts: all
+# Example using tags to conditionally only set certain roles
+# - hosts: all
+#   roles:
+#     - common
+#     - { role: nginx, tags: ['base'] }
+#     - { role: sparkngin, tags: ['sparkngin'] }
+#     - { role: zookeeper, tags: ['zookeeper'] }
+#     - { role: kafka, tags: ['kafka'] }
+
+- hosts: sparkngin1
   roles:
     - common
-    - nginx
     - sparkngin
+
+- hosts: sparkngin2
+  roles:
+      - common
+      - java
+      - zookeeper
+
+    
 
