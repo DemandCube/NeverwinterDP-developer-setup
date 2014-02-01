@@ -4,6 +4,10 @@ Sparkngin Developer Setup
 
 This is the Vagrant Setup for developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
 
+This setups two virtualboxs:
+1) Sparkngin (host: sparkning1)
+2) Kafka and Zookeeper (host: sparkngin2)
+
 Install
 ====
 Step 1) Setup
@@ -23,7 +27,9 @@ Step 2) Run
 git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
 cd vagrant-centos-template
 vagrant up
-vagrant ssh
+# vagrant ssh sparkngin1 
+#    or
+# vagrant ssh sparkngin2
 ```
 
 Keep your fork updated
