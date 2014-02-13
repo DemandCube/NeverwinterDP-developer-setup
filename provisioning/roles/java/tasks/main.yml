@@ -16,14 +16,30 @@
   file: src=/usr/java/default/bin/javac dest=/usr/bin/javac state=link
   sudo: yes
   
-- name: download maven repo
-  shell: "wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O {{ maven_repo_location }} creates={{ maven_repo_location }}"
+# - name: download maven repo
+#   shell: "wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O {{ maven_repo_location }} creates={{ maven_repo_location }}"
+#   sudo: yes
+
+- name: create apache-maven dir
+  file: state=directory path=/usr/local/apache-maven/ owner=root group=root mode=755
   sudo: yes
 
-- name: install maven
-  yum: name='apache-maven' state=installed
+- name: download apache-maven 3.1.1
+  get_url: url=http://mirror.cc.columbia.edu/pub/software/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz dest=/usr/local/apache-maven/apache-maven-3.1.1-bin.tar.gz mode=0440
   sudo: yes
+  
+- name: untar maven
+  shell: tar xzf /usr/local/apache-maven/apache-maven-3.1.1-bin.tar.gz -C /usr/local/apache-maven/
+  sudo: yes
+
+- name: copy maven env variable file to /etc/profile.d/maven.sh
+  copy: src=maven.sh dest=/etc/profile.d/maven.sh owner=root group=root mode=755
+  sudo: yes
+
+# - name: install maven
+#   yum: name='apache-maven' state=installed
+#   sudo: yes
 
 - name: set up mvn symlink
-  file: state=link src=/usr/share/apache-maven/bin/mvn dest=/usr/bin/mvn
+  file: state=link src=/usr/local/apache-maven/apache-maven-3.1.1-bin.tar.gz/bin/mvn dest=/usr/bin/mvn
   sudo: yes

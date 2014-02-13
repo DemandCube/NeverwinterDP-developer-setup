@@ -37,4 +37,13 @@
   yum: name='lsof' state=installed
   sudo: yes
 
+- name: install ntp
+  yum: name={{item}} state=installed
+  with_items:
+    - ntp
+    - ntpdate.x86_64
+  sudo: yes
 
+- name: Ensure ntpd is on via chkconfig
+  shell: chkconfig ntpd on
+  sudo: yes

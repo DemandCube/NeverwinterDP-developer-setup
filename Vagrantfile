@@ -120,7 +120,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #     'vvv', more
       #     'vvvv', connection debugging
       ansible.playbook = "provisioning/server.yml"
-      
+      ansible.groups = { "Zookeepers" => ["sparkngin2"] } 
       # Example of setting tags in ansible
       # Referenced in commented out example in server.yml
       # ansible.tags = ["base", "zookeeper"]
