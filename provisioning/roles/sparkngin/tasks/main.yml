@@ -19,6 +19,10 @@
 - name: install zlib-devel
   yum: name=zlib-devel
   sudo: yes
+  
+- name: install strace
+  yum: name=strace
+  sudo: yes
 
 - name: build and install librdkafka
   command: "{{ item }} chdir=/home/vagrant/librdkafka"
