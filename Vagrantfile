@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :sparkngin1 do |sparkngin1|
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    sparkngin1.vm.network :private_network, ip: "192.168.56.11"
+    sparkngin1.vm.network :private_network, ip: "192.168.56.11", virtualbox__intnet: "neverwinterdp"
     sparkngin1.vm.hostname = "sparkngin1.local"
     
     config.vm.provider :virtualbox do |vb|
@@ -94,7 +94,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :sparkngin2 do |sparkngin2|
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    sparkngin2.vm.network :private_network, ip: "192.168.56.12"
+    sparkngin2.vm.network :private_network, ip: "192.168.56.12", virtualbox__intnet: "neverwinterdp"
     sparkngin2.vm.hostname = "sparkngin2.local"
     
     config.vm.provider :virtualbox do |vb|
