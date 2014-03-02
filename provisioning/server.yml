@@ -12,6 +12,7 @@
     - test
     - common
     - sparkngin
+    - testing_tools
 
 - hosts: sparkngin2
   roles:
@@ -20,6 +21,7 @@
     - java
     - zookeeper
     - kafka
+    - testing_tools
 
     
 
