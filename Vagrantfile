@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "demandcube-centos65-virtualbox-v1.1"
-
+  
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "https://github.com/DemandCube/vagrant-centos/releases/download/demandcube-v6.5.1.1/centos65-x86_64-20140126.box"
@@ -29,6 +29,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # vb.name = "sparkngin"
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
+  end
+
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook="emptyplaybook.yml"
+    ansible.groups = {
+      "jenkins" => ["jenkinsdp"],
+      "server" => ["sparkngin1", "sparkngin2"],
+      "common:children" => ["jenkins","server"] #Common things on per-group basis
+    }
   end
 
   # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
@@ -51,7 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # sparkngin1.ssh.guest_port = "22" 
     
     # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
-    config.vm.provision :ansible do |ansible|
+    #config.vm.provision :ansible do |ansible|
       # ansible.verbose = "v"
       # ansible.verbose = "vv"
       # ansible.verbose = "vvv"
@@ -60,7 +70,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #     'vv'
       #     'vvv', more
       #     'vvvv', connection debugging
-      ansible.playbook = "provisioning/server.yml"
+      #ansible.playbook = "provisioning/server.yml"
       
       # Example of setting tags in ansible
       # Referenced in commented out example in server.yml
@@ -69,7 +79,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # If you get the error below enable the line below
       
       #######
-      ansible.host_key_checking = false
+      #ansible.host_key_checking = false
       #######
       
       # debug3: check_host_in_hostfile: host [127.0.0.1]:2222 filename /Users/username/.ssh/known_hosts
@@ -87,7 +97,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # RSA host key for [127.0.0.1]:2222 has changed and you have requested strict checking.
       # Host key verification failed.
       
-    end
+    #end
     
   end
   
@@ -110,8 +120,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # sparkngin1.ssh.guest_port = "22" 
     
     # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
-    config.vm.provision :ansible do |ansible|
-      ansible.verbose = "v"
+    #config.vm.provision :ansible do |ansible|
+      #ansible.verbose = "v"
       # ansible.verbose = "vv"
       # ansible.verbose = "vvv"
       # ansible.verbose = "vvvv"
@@ -119,8 +129,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #     'vv'
       #     'vvv', more
       #     'vvvv', connection debugging
-      ansible.playbook = "provisioning/server.yml"
-      ansible.groups = { "Zookeepers" => ["sparkngin2"] } 
+      #ansible.playbook = "provisioning/server.yml"
+      #ansible.groups = { "Zookeepers" => ["sparkngin2"] } 
       # Example of setting tags in ansible
       # Referenced in commented out example in server.yml
       # ansible.tags = ["base", "zookeeper"]
@@ -128,7 +138,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # If you get the error below enable the line below
       
       #######
-      ansible.host_key_checking = false
+      #ansible.host_key_checking = false
       #######
       
       # debug3: check_host_in_hostfile: host [127.0.0.1]:2222 filename /Users/username/.ssh/known_hosts
@@ -146,11 +156,64 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # RSA host key for [127.0.0.1]:2222 has changed and you have requested strict checking.
       # Host key verification failed.
       
-    end
+    #end
     
   end
 
 
+  
+  # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
+  config.vm.define :jenkinsdp do |jenkinsdp|
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    jenkinsdp.vm.network :private_network, ip: "192.168.56.10", virtualbox__intnet: "neverwinterdp"
+    jenkinsdp.vm.network "forwarded_port", guest: 8080, host: 8080
+    jenkinsdp.vm.hostname = "jenkinsdp.local"
+    
+    config.vm.provider :virtualbox do |vb|
+      vb.name = "jenkinsdp"
+      # vb.customize ["modifyvm", :id, "--memory", "1024"]
+      # vb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
+    
+    # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
+    #config.vm.provision :ansible do |ansible|
+      # ansible.verbose = "v"
+      # ansible.verbose = "vv"
+      # ansible.verbose = "vvv"
+      # ansible.verbose = "vvvv"
+      #     'v', verbose mode
+      #     'vv'
+      #     'vvv', more
+      #     'vvvv', connection debugging
+      #ansible.playbook = "provisioning/server.yml"
+      
+      # If you get the error below enable the line below
+      
+      #######
+      #ansible.host_key_checking = false
+      #######
+      
+      # debug3: check_host_in_hostfile: host [127.0.0.1]:2222 filename /Users/username/.ssh/known_hosts
+      # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      # @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+      # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      # IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+      # Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+      # It is also possible that the RSA host key has just been changed.
+      # The fingerprint for the RSA key sent by the remote host is
+      # 1b:52:69:cb:ed:31:65:ad:3c:12:41:74:8f:77:c0:68.
+      # Please contact your system administrator.
+      # Add correct host key in /Users/username/.ssh/known_hosts to get rid of this message.
+      # Offending key in /Users/username/.ssh/known_hosts:174
+      # RSA host key for [127.0.0.1]:2222 has changed and you have requested strict checking.
+      # Host key verification failed.
+      
+    #end
+    
+  end
+ 
+  
   #
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
