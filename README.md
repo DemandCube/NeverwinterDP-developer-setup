@@ -19,17 +19,23 @@ Step 1) Setup
 git clone https://github.com/DemandCube/developer-setup.git
 cd developer-setup
 ./setup.sh
+vagrant plugin install vagrant-flow
 ```
 Step 2) Run
 ----
 
 ```
 git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
-cd vagrant-centos-template
+git clone https://github.com/DemandCube/DemandCubePlaybooks.git
+cd Sparkngin-developer-setup
 vagrant up
+vagrant ansible-inventory
+ansible-playbook -i vagrant-flow_ansible_inventory ../DemandCubePlaybooks/main.yml
 # vagrant ssh sparkngin1 
 #    or
 # vagrant ssh sparkngin2
+#    or
+# vagrant ssh jenkinsdp
 ```
 
 Keep your fork updated
