@@ -32,14 +32,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook="emptyplaybook.yml"
-    ansible.groups = {
-      "jenkins" => ["jenkinsdp"],
-      "server" => ["sparkngin1", "sparkngin2"],
-      "common:children" => ["jenkins","server"] #Common things on per-group basis
-    }
-  end
+  #config.vm.provision "ansible" do |ansible|
+    #ansible.playbook="emptyplaybook.yml"
+    #ansible.groups = {
+    #  "jenkins" => ["jenkinsdp"],
+    #  "server" => ["sparkngin1", "sparkngin2"],
+    #  "common:children" => ["jenkins","server"] #Common things on per-group basis
+    #}
+  #end
 
   # More Info See: http://docs.vagrantup.com/v2/provisioning/ansible.html
   config.vm.define :sparkngin1 do |sparkngin1|

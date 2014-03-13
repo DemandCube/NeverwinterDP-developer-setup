@@ -1,0 +1,9 @@
+---
+common:children:
+- jenkins
+- server
+jenkins:
+- jenkinsdp
+server:
+- sparkngin1
+- sparkngin2
