@@ -22,6 +22,10 @@
     - zookeeper
     - kafka
     - testing_tools
+    - play-framework
+    - mysql-server
+    - kafka-web-console
+
 
     
 

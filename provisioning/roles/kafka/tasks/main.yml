@@ -20,21 +20,54 @@
     - /etc/kafka
   sudo: yes
 
-- name: test if kafka rpm
-  stat: path=/vagrant/kafka-0.8.0-9.x86_64.rpm
-  register: kafkarpmstat
+- name: test if kafka git source exists
+  stat: path=/tmp/kafka-{{ kafka_version }}
+  register: kafka_git_source
 
-# TODO: Get rid of copying rpm once it lives on ae repo.
-- name: download kafka rpm
-  get_url: url=http://poole.im/files/{{ item }} dest=/vagrant/{{ item }}
-  with_items:
-    - kafka-0.8.0-9.x86_64.rpm
-  when: kafkarpmstat.stat.exists == false
+- name: Kafka | Download the kafka source from the git repo
+  git: repo={{ kafka_repo_url }} dest=/tmp/kafka-{{ kafka_version }} version={{ kafka_version }}
+  when: kafka_git_source.stat.exists == false
 
-# TODO: install from ae repo once it's available.
-- name: yum Install kafka
-  yum: name='/vagrant/kafka-0.8.0-9.x86_64.rpm' state=installed
+- name: test if kafka source exists
+  stat: path=/usr/local/kafka-{{ kafka_version }}
+  register: kafka_source
+
+- name: Kafka | Copy the kafka source in /usr/local
+  command: rsync --exclude ".git/" --exclude ".git*" -av --no-perms /tmp/kafka-{{ kafka_version }} /usr/local creates=/usr/local/kafka-{{ kafka_version }}
+  when: kafka_source.stat.exists == false
   sudo: yes
+
+- name: Kafka | Patch the kafka source for scala version compatibility
+  command: sed -i "s/2.8.0/{{ scala_version }}/g" bin/kafka-run-class.sh chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Package the kafka source - pt. 1
+  shell: ./sbt update chdir=/usr/local/kafka-{{ kafka_version }} creates=/usr/local/kafka-{{ kafka_version }}/target
+
+- name: Kafka | Package the kafka source - pt. 2
+  shell: ./sbt "++{{ scala_version }} package" chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Package the kafka source - pt. 3
+  shell: ./sbt "++{{ scala_version }} assembly-package-dependency" chdir=/usr/local/kafka-{{ kafka_version }}
+
+- name: Kafka | Update the kafka install permissions
+  file: path=/usr/local/kafka-{{ kafka_version }} owner={{ kafka_user }} group={{ kafka_group }} state=directory recurse=yes
+  sudo: yes
+
+# - name: test if kafka rpm
+#   stat: path=/vagrant/kafka-0.8.0-9.x86_64.rpm
+#   register: kafkarpmstat
+
+# # TODO: Get rid of copying rpm once it lives on ae repo.
+# - name: download kafka rpm
+#   get_url: url=http://poole.im/files/{{ item }} dest=/vagrant/{{ item }}
+#   with_items:
+#     - kafka-0.8.0-9.x86_64.rpm
+#   when: kafkarpmstat.stat.exists == false
+
+# # TODO: install from ae repo once it's available.
+# - name: yum Install kafka
+#   yum: name='/vagrant/kafka-0.8.0-9.x86_64.rpm' state=installed
+#   sudo: yes
 
 - name: Symlink /usr/lib/kafka
   file: src={{ kafka_home }} dest=/usr/lib/kafka state=link

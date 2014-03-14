@@ -1,0 +1,9 @@
+# Variables for only this role
+kafka_web_console_repo_url: https://github.com/claudemamo/kafka-web-console.git
+kafka_web_console_version: v1.0
+
+# MySQL configuration
+mysql_jdbc_driver_class: com.mysql.jdbc.Driver
+mysql_jdbc_url: jdbc:mysql://localhost/play?createDatabaseIfNotExist=true
+mysql_user: root
+mysql_passwd: root

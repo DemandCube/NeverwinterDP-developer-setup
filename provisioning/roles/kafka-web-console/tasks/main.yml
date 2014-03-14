@@ -1,0 +1,52 @@
+- name: test if kafka web console git source exists
+  stat: path=/tmp/kafka_web_console-{{ kafka_web_console_version }}
+  register: kafka_web_console_git_source
+
+- name: Download the kafka web console source from the git repo
+  git: repo={{ kafka_web_console_repo_url }} dest=/tmp/kafka_web_console-{{ kafka_web_console_version }} version={{ kafka_web_console_version }}
+  when: kafka_web_console_git_source.stat.exists == false
+
+- name: Copy the kafka web console source in /usr/local
+  command: rsync --exclude ".git/" --exclude ".git*" -av --no-perms /tmp/kafka_web_console-{{ kafka_web_console_version }} /usr/local creates=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+  sudo: yes
+
+- name : Stop the firewall
+  command: /etc/init.d/iptables stop
+  sudo: yes
+
+- name : Stop the firewall forever
+  command: chkconfig iptables off 
+  sudo: yes
+
+- name: make sure the kafka_web_console  conf is removed before copying
+  file: dest=/usr/local/kafka_web_console-{{ kafka_web_console_version }}/conf/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - application.conf
+
+- name: copy kafka_web_console application.conf
+  template: src={{ item }}.j2 dest=/usr/local/kafka_web_console-{{kafka_web_console_version}}/conf/{{ item }} mode=755
+  sudo: yes
+  with_items:
+    - application.conf
+
+- name: make sure the kafka_web_console  build.sbt is removed before copying
+  file: dest=/usr/local/kafka_web_console-{{ kafka_web_console_version }}/{{ item }} state='absent'
+  sudo: yes
+  with_items:
+    - build.sbt
+
+- name: copy kafka_web_console build.conf
+  template: src={{ item }}.j2 dest=/usr/local/kafka_web_console-{{kafka_web_console_version}}/{{ item }} mode=755
+  sudo: yes
+  with_items:
+    - build.sbt
+
+- name : Stage kafka web console
+  shell: play start chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+
+# - name : Stage kafka web console
+#   shell: play clean compile stage chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+
+# - name : Run kafka web console
+#   shell: target/start chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
