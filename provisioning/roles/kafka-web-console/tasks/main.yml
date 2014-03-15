@@ -59,35 +59,35 @@
 - name: Remove old zip and unziped file
   file: dest={{ item }} state='absent'
   with_items:
-   - /usr/lib/kafka_web_console/kafka-web-console-v1.0.zip
-   - /usr/lib/kafka_web_console/kafka-web-console-v1.0
+   - /usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}.zip
+   - /usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}
   sudo: yes
 
 - name: Copy zip to home folder
-  command: cp {{ kafka_web_console_home }}/target/universal/kafka-web-console-v1.0.zip /usr/lib/kafka_web_console/
+  command: cp {{ kafka_web_console_home }}/target/universal/kafka-web-console-{{ kafka_web_console_version }}.zip /usr/lib/kafka_web_console/
   sudo: yes
 
 - name: Unpack project
-  command: unzip kafka-web-console-v1.0.zip chdir=/usr/lib/kafka_web_console
+  command: unzip kafka-web-console-{{ kafka_web_console_version }}.zip chdir=/usr/lib/kafka_web_console
   sudo: yes
 
 - name: Copy start script from source
-  template: src={{ item }}.j2  dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0/{{ item }} mode=755
+  template: src={{ item }}.j2  dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}/{{ item }} mode=755
   with_items:
    - start
   sudo: yes
 
 - name: Chmod start script in project
-  file: dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0/start mode=755
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}/start mode=755
   sudo: yes
 
 - name: Remove old zip file (let's clean the house a bit)
-  file: dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0.zip state=absent
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}.zip state=absent
   sudo: yes
 
 # Launch project (asynchronously with fire-and-forget behaviour)
 - name: Launch project
-  shell: nohup ./start chdir=/usr/lib/kafka_web_console/kafka-web-console-v1.0
+  shell: nohup ./start chdir=/usr/lib/kafka_web_console/kafka-web-console-{{ kafka_web_console_version }}
   async: 60
   poll: 0
   sudo: yes

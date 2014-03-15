@@ -9,8 +9,8 @@
   when: play.stat.exists == false
   sudo: yes
 
-- name: download play-framework 2.2.1
-  get_url: url=http://downloads.typesafe.com/play/2.2.1/play-2.2.1.zip dest=/usr/local/play-framework/play-{{ play_version }}.zip mode=0440
+- name: download play-framework play_version
+  get_url: url=http://downloads.typesafe.com/play/{{ play_version }}/play-{{ play_version }}.zip dest=/usr/local/play-framework/play-{{ play_version }}.zip mode=0440
   when: play.stat.exists == false
   sudo: yes
 
