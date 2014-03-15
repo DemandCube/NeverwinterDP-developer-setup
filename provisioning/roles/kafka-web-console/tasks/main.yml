@@ -1,3 +1,6 @@
+# kakfak web console installation from github
+
+---
 - name: test if kafka web console git source exists
   stat: path=/tmp/kafka_web_console-{{ kafka_web_console_version }}
   register: kafka_web_console_git_source
@@ -42,11 +45,49 @@
   with_items:
     - build.sbt
 
-- name : Stage kafka web console
-  shell: play start chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+# Create distribution async, polling every 10s (Default) for a max of 15m (60s * 15m = 900s)
+- name: Create Dist deployment
+  shell: cd {{ kafka_web_console_home }} && play dist
+  async: 900
 
-# - name : Stage kafka web console
-#   shell: play clean compile stage chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+- name: mkdir /usr/lib/kafka_web_console
+  file: dest={{ item }} state=directory
+  with_items:
+    - /usr/lib/kafka_web_console
+  sudo: yes
 
-# - name : Run kafka web console
-#   shell: target/start chdir=/usr/local/kafka_web_console-{{ kafka_web_console_version }}
+- name: Remove old zip and unziped file
+  file: dest={{ item }} state='absent'
+  with_items:
+   - /usr/lib/kafka_web_console/kafka-web-console-v1.0.zip
+   - /usr/lib/kafka_web_console/kafka-web-console-v1.0
+  sudo: yes
+
+- name: Copy zip to home folder
+  command: cp {{ kafka_web_console_home }}/target/universal/kafka-web-console-v1.0.zip /usr/lib/kafka_web_console/
+  sudo: yes
+
+- name: Unpack project
+  command: unzip kafka-web-console-v1.0.zip chdir=/usr/lib/kafka_web_console
+  sudo: yes
+
+- name: Copy start script from source
+  template: src={{ item }}.j2  dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0/{{ item }} mode=755
+  with_items:
+   - start
+  sudo: yes
+
+- name: Chmod start script in project
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0/start mode=755
+  sudo: yes
+
+- name: Remove old zip file (let's clean the house a bit)
+  file: dest=/usr/lib/kafka_web_console/kafka-web-console-v1.0.zip state=absent
+  sudo: yes
+
+# Launch project (asynchronously with fire-and-forget behaviour)
+- name: Launch project
+  shell: nohup ./start chdir=/usr/lib/kafka_web_console/kafka-web-console-v1.0
+  async: 60
+  poll: 0
+  sudo: yes
