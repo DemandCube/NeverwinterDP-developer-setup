@@ -25,7 +25,4 @@
     - play-framework
     - mysql-server
     - kafka-web-console
-
-
-    
-
+    - kafka-offset-monitor
