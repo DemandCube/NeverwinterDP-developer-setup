@@ -32,7 +32,7 @@ mkdir library
 cd library
 git clone https://github.com/DemandCube/ansible-flow.git
 mv ./ansible-flow/* ./
-cd ../Sparkngin-developer-setup
+cd ../../Sparkngin-developer-setup
 vagrant up
 vagrant ansible-inventory
 ansible-playbook -i vagrant-flow_ansible_inventory ../DeveloperPlayBooks/main.yml
