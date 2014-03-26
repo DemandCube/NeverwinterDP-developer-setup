@@ -26,16 +26,16 @@ Step 2) Run
 
 ```
 git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
-git clone https://github.com/DemandCube/DemandCubePlaybooks.git
-cd DemandCubePlaybooks
+git clone https://github.com/DemandCube/DeveloperPlayBooks.git
+cd DeveloperPlayBooks
 mkdir library
 cd library
 git clone https://github.com/DemandCube/ansible-flow.git
 mv ./ansible-flow/* ./
-cd ../Sparkngin-developer-setup
+cd ../../Sparkngin-developer-setup
 vagrant up
 vagrant ansible-inventory
-ansible-playbook -i vagrant-flow_ansible_inventory ../DemandCubePlaybooks/main.yml
+ansible-playbook -i vagrant-flow_ansible_inventory ../DeveloperPlayBooks/main.yml
 # vagrant ssh sparkngin1 
 #    or
 # vagrant ssh sparkngin2
