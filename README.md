@@ -39,6 +39,7 @@ cd Sparkngin-developer-setup.git
 ```
 
 Step 3)Clean up, destroy VMs, and go back to a clean state
+----
 ```
 cd Sparkngin-developer-setup.git
 ./destroyAndCleanup.sh 
