@@ -44,6 +44,23 @@ cd Sparkngin-developer-setup.git
 ./destroyAndCleanup.sh 
 ```
 
+Vagrant Flow Documentation
+===
+https://github.com/DemandCube/vagrant-flow
+
+Config Files Documentation
+===
+- multiinitconfig.yml
+..- default file used by vagrant flow multiinit
+..- defines which hosts to create based on which DemandCube box config
+- groupconfig.yml
+..- default file used by vagrant flow ansibleinventory
+..- defines which hosts are part of which ansible group
+- flow-playbook.yml
+..- default file used by vagrant flow playbook
+..- defines which ansible inventory file and playbook to execute
+
+
 Keep your fork updated
 ====
 [Github Fork a Repo Help](https://help.github.com/articles/fork-a-repo)
