@@ -1,3 +1,0 @@
-epel_filename: "epel-release-6-8.noarch.rpm"
-epel_rpm: "/vagrant/{{ epel_filename }}"
-
