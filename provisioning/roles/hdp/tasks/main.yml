@@ -1,3 +1,0 @@
-- name: Install HDP2 yum Repo
-  sudo: yes
-  copy: src=hdp.repo dest=/etc/yum.repos.d/hdp.repo

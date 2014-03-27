@@ -4,9 +4,10 @@ Sparkngin Developer Setup
 
 This is the Vagrant Setup for developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
 
-This setups two virtualboxs:
+This setups three virtualboxs:
 1) Sparkngin (host: sparkning1)
 2) Kafka and Zookeeper (host: sparkngin2)
+3) Jenkins (automated testing and tasks)
 
 Install
 ====
@@ -26,21 +27,21 @@ Step 2) Run
 
 ```
 git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
-git clone https://github.com/DemandCube/DeveloperPlayBooks.git
-cd DeveloperPlayBooks
-mkdir library
-cd library
-git clone https://github.com/DemandCube/ansible-flow.git
-mv ./ansible-flow/* ./
-cd ../../Sparkngin-developer-setup
-vagrant up
-vagrant ansible-inventory
-ansible-playbook -i vagrant-flow_ansible_inventory ../DeveloperPlayBooks/main.yml
+cd Sparkngin-developer-setup.git
+./setup.sh  #This will take a long time
+
+#Then you'll be able to...
 # vagrant ssh sparkngin1 
 #    or
 # vagrant ssh sparkngin2
 #    or
 # vagrant ssh jenkinsdp
+```
+
+Step 3)Clean up, destroy VMs, and go back to a clean state
+```
+cd Sparkngin-developer-setup.git
+./destroyAndCleanup.sh  #This will take a long time
 ```
 
 Keep your fork updated
