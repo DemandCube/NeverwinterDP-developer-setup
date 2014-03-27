@@ -27,7 +27,7 @@ Step 2) Run
 
 ```
 git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
-cd Sparkngin-developer-setup.git
+cd Sparkngin-developer-setup
 ./setup.sh  #This will take a long time
 
 #Then you'll be able to...
@@ -41,7 +41,7 @@ cd Sparkngin-developer-setup.git
 Step 3)Clean up, destroy VMs, and go back to a clean state
 ----
 ```
-cd Sparkngin-developer-setup.git
+cd Sparkngin-developer-setup
 ./destroyAndCleanup.sh 
 ```
 
