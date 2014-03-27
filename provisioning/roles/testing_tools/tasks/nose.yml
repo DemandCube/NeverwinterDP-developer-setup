@@ -1,3 +1,0 @@
-- name: install nose for python
-  pip: name='nose' state=present
-  sudo: yes
