@@ -1,13 +1,17 @@
 Sparkngin Developer Setup
 =========================
-- A [NeverwinterDP](https://github.com/DemandCube/NeverwinterDP) and [DemandCube](https://github.com/DemandCube) Project
+A [NeverwinterDP](https://github.com/DemandCube/NeverwinterDP) and [DemandCube](https://github.com/DemandCube) Project
 
 This is the Vagrant Setup for developing [Sparkngin](https://github.com/DemandCube/Sparkngin)
 
-This setups three virtualboxs:
-1) Sparkngin (host: sparkning1)
-2) Kafka and Zookeeper (host: sparkngin2)
-3) Jenkins (automated testing and tasks)
+This sets up the following virtualboxs:
+
+| Box role      | Host Name     | 
+| ------------- |:-------------:| 
+| Sparkngin      | sparkngin1   | 
+| Kafka and Zookeeper      | sparkngin2      | 
+| Jenkins automated testing/tasks |jenkinsdp  | 
+
 
 Install
 ====
@@ -52,14 +56,14 @@ https://github.com/DemandCube/vagrant-flow
 Config Files Documentation
 ===
 - multiinitconfig.yml
-..- default file used by vagrant flow multiinit
-..- defines which hosts to create based on which DemandCube box config
+    * default file used by vagrant flow multiinit
+    * defines which hosts to create based on which DemandCube box config
 - groupconfig.yml
-..- default file used by vagrant flow ansibleinventory
-..- defines which hosts are part of which ansible group
+    * default file used by vagrant flow ansibleinventory
+    * defines which hosts are part of which ansible group
 - flow-playbook.yml
-..- default file used by vagrant flow playbook
-..- defines which ansible inventory file and playbook to execute
+    * default file used by vagrant flow playbook
+    * defines which ansible inventory file and playbook to execute
 
 
 Keep your fork updated
