@@ -10,7 +10,6 @@ This sets up the following virtualboxs:
 | ------------- |:-------------:| 
 | Sparkngin      | sparkngin1   | 
 | Kafka and Zookeeper      | sparkngin2      | 
-| Jenkins automated testing/tasks |jenkinsdp  | 
 
 
 Install
@@ -38,8 +37,6 @@ cd Sparkngin-developer-setup
 # vagrant ssh sparkngin1 
 #    or
 # vagrant ssh sparkngin2
-#    or
-# vagrant ssh jenkinsdp
 ```
 
 Step 3)Clean up, destroy VMs, and go back to a clean state
