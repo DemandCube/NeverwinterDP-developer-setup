@@ -1,3 +1,3 @@
 ---
-:playbook: DemandCubePlaybooks/main.yml
+:playbook: DeveloperPlaybooks/main.yml
 :inventory: vagrant-flow_ansible_inventory

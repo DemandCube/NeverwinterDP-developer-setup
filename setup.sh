@@ -1,8 +1,8 @@
 set -x
-git clone https://github.com/DemandCube/DemandCubePlaybooks.git 
-cd DemandCubePlaybooks
+git clone https://github.com/DemandCube/DeveloperPlaybooks.git 
+cd DeveloperPlayBooks
 git clone https://github.com/DemandCube/ansible-flow.git
-mv -f  ./ansible-flow/library/ ./library
+mv -f  ./ansible-flow/library/* ./library
 rm -rf ./ansible-flow
 
 cd ../
