@@ -30,7 +30,7 @@ Step 2) Run
 
 ```
 git clone https://github.com/DemandCube/NeverwinterDP-developer-setup.git
-cd Sparkngin-developer-setup
+cd NeverwinterDP-developer-setup
 ./setup.sh  #This will take a long time
 
 #Then you'll be able to...
@@ -42,7 +42,7 @@ cd Sparkngin-developer-setup
 Step 3)Clean up, destroy VMs, and go back to a clean state
 ----
 ```
-cd Sparkngin-developer-setup
+cd NeverwinterDP-developer-setup
 ./destroyAndCleanup.sh 
 ```
 
