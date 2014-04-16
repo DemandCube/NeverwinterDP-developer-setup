@@ -29,7 +29,7 @@ Step 2) Run
 ----
 
 ```
-git clone https://github.com/DemandCube/Sparkngin-developer-setup.git
+git clone https://github.com/DemandCube/NeverwinterDP-developer-setup.git
 cd Sparkngin-developer-setup
 ./setup.sh  #This will take a long time
 
@@ -71,7 +71,7 @@ Keep your fork updated
 - Add the remote, call it "upstream":
 
 ```
-git remote add upstream git@github.com:DemandCube/Sparkngin-developer-setup.git
+git remote add upstream git@github.com:DemandCube/NeverwinterDP-developer-setup.git
 ```
 - Fetch all the branches of that remote into remote-tracking branches,
 - such as upstream/master:
